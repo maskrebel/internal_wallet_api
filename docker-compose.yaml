@@ -1,0 +1,22 @@
+version: '2.1'
+
+services:
+  rail:
+    build:
+      context: .
+      dockerfile: local.Dockerfile
+    command: /usr/sbin/sshd -D
+    ports:
+      - '3000:3000'
+      - '2200:22'
+    volumes:
+      - .:/code
+
+  db:
+    image: mdillon/postgis:9.6
+    environment:
+      - POSTGRES_USER=rail
+      - POSTGRES_DB=rail
+      - POSTGRES_PASSWORD=rail
+    ports:
+      - "5556:5432"
