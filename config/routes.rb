@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :transactions, only: [:create]
+  get 'stocks/price/:ticker', to: 'price_stocks#show', as: :stock_price
+  get 'stocks/prices', to: 'price_stocks#index', as: :stocks_prices
+  get 'stocks/price_all', to: 'price_stocks#all', as: :all_stocks_prices
 end
