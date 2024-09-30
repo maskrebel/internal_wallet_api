@@ -12,8 +12,6 @@ class PriceStocksController < ApplicationController
 
   def index
     tickers = params[:tickers]&.split(',')
-    puts("gifari")
-    puts(params[:tickers])
     if tickers.present?
       begin
         prices = LatestStockPrice::Client.prices(params[:tickers])
