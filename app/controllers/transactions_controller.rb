@@ -14,8 +14,22 @@ class TransactionsController < ApplicationController
   private
 
   def set_wallets
-    @source_wallet = Wallet.find_by(entity_id: params[:source_wallet_id], entity_type: params[:wallet_type])
-    @target_wallet = Wallet.find_by(entity_id: params[:target_wallet_id], entity_type: params[:wallet_type])
+    cookie = request.headers['Cookie']
+    if cookie.nil? || cookie.empty?
+      render json: {is_success: false, message: 'Invalid session id'}, status: 500 and return
+    end
+    token = Session.find_by(token: cookie.split('=').last)
+    if token.nil?
+      render json: {is_success: false, message: 'Invalid session id'}, status: 500 and return
+    else
+      if token.created_at + 24.hours <= Time.current
+        render json: {is_success: false, message: 'Invalid session expired'}, status: 500 and return
+      end
+      user = token.user
+    end
+
+    @source_wallet = user.wallet
+    @target_wallet = Wallet.find_by(entity_id: params[:target_wallet_id])
   end
 
   def handle_transaction

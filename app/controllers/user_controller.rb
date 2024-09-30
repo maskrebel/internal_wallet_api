@@ -54,16 +54,16 @@ class UserController < ApplicationController
   private
 
   def get_user
-    session_id = request.headers['Cookie'].split('=').last
-    if session_id.nil? || session_id.empty?
-      render json: {is_success: false, message: 'Invalid session id'}, status: 500
+    cookie = request.headers['Cookie']
+    if cookie.nil? || cookie.empty?
+      render json: {is_success: false, message: 'Invalid session id'}, status: 500 and return
     end
-    token = Session.find_by(token: session_id)
+    token = Session.find_by(token: cookie.split('=').last)
     if token.nil?
-      render json: {is_success: false, message: 'Invalid session id'}, status: 500
+      render json: {is_success: false, message: 'Invalid session id'}, status: 500 and return
     else
       if token.created_at + 24.hours <= Time.current
-        render json: {is_success: false, message: 'Invalid session expired'}, status: 500
+        render json: {is_success: false, message: 'Invalid session expired'}, status: 500 and return
       end
       @user = token.user
     end
