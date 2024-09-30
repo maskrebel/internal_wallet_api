@@ -11,4 +11,9 @@ Rails.application.routes.draw do
   get 'stocks/price/:ticker', to: 'price_stocks#show', as: :stock_price
   get 'stocks/prices', to: 'price_stocks#index', as: :stocks_prices
   get 'stocks/price_all', to: 'price_stocks#all', as: :all_stocks_prices
+
+  post 'user/login', to: 'user#login', as: :user_login
+  post 'user/logout', to: 'user#logout', as: :user_logout
+  get 'user/balance', to: 'user#balance', as: :user_balance
+  get 'user/history', to: 'user#history', as: :user_history
 end
