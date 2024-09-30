@@ -12,9 +12,7 @@ This Ruby on Rails project implements an **Internal Wallet Transactional System*
 - [Database Schema](#database-schema)
 - [Authentication](#authentication)
 - [API Endpoints](#api-endpoints)
-- [Testing](#testing)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
