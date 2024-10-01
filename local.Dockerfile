@@ -15,4 +15,4 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
 COPY . /code
 WORKDIR /code
-#RUN bundle install --gemfile /code/Gemfile
+RUN bundle install --gemfile /code/Gemfile
